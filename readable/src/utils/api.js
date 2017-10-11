@@ -1,5 +1,3 @@
-import uuidv4 from 'uuid/v4'
-
 /**
 * @description Function for consuming the readable api
 * @param {string} endpoint - The endpoint for which the api calls
@@ -47,12 +45,12 @@ export const getPosts = () => apiFetchSkel('/posts')
 * @param {string} body - body of the post
 * @param {string} owner - user who wrote the post
 * @param {string} category - category of the post
+* @param {string} id - id of the post
+* @param {Date} timestamp - timestamp of the post
 * @return {Promise} - function call to the apiFetchSkel function
 */
-export const addPost = (title, body, owner, category) => {
-  const id = uuidv4()
-  const timestamp = Date.now()
-  const requestBody = {id, timestamp, title, body, owner, category}
+export const addPost = (title, author, body, category, id, timestamp) => {
+  const requestBody = {id, timestamp, title, body, author, category}
 
   return apiFetchSkel('/posts', 'POST', requestBody)
 }
@@ -92,12 +90,12 @@ export const getPostComments = (id) => apiFetchSkel(`/posts/${id}/comments`)
 * @param {string} body - body of the comment
 * @param {string} owner - user who wrote the comment
 * @param {string} parentId - the post id that the comment belongs to
+* @param {string} id - the post id that the comment belongs to
+* @param {Date} timestamp - the post id that the comment belongs to
 * @return {Promise} - function call to the apiFetchSkel function
 */
-export const addComment = (body, owner, parentId) => {
-  const id = uuidv4()
-  const timestamp = Date.now()
-  const requestBody = {id, timestamp, body, owner, parentId}
+export const addComment = (author, body, parentId, id, timestamp) => {
+  const requestBody = {id, timestamp, body, author, parentId}
 
   return apiFetchSkel(`/comments`, 'POST', requestBody)
 }
@@ -114,7 +112,14 @@ export const getComment = (id) => apiFetchSkel(`/comments/${id}`)
 * @param {string} id - id of the comment being voted on
 * @return {Promise} - function call to the apiFetchSkel function
 */
-export const postVote = (id) => apiFetchSkel(`/comments/${id}`, 'POST')
+export const castCommentVote = (id, vote) => apiFetchSkel(`/comments/${id}`, 'POST', {'option': vote})
+
+/**
+* @description Create a vote for a specific comment
+* @param {string} id - id of the comment being voted on
+* @return {Promise} - function call to the apiFetchSkel function
+*/
+export const castPostVote = (id, vote) => apiFetchSkel(`/posts/${id}`, 'POST', {'option': vote})
 
 /**
 * @description Update an existing comment
@@ -122,8 +127,7 @@ export const postVote = (id) => apiFetchSkel(`/comments/${id}`, 'POST')
 * @param {string} body - the new body of the comment
 * @return {Promise} - function call to the apiFetchSkel function
 */
-export const updateComment = (id, body) => {
-  const timestamp = Date.now()
+export const updateComment = (id, body, timestamp) => {
   const requestBody = {timestamp, body}
 
   return apiFetchSkel(`/comments/${id}`, 'PUT', requestBody)
