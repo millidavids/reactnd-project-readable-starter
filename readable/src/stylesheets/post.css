@@ -1,0 +1,29 @@
+.post {
+    position: relative;
+    margin: 8px 16px;
+}
+
+.post-body {
+    margin: 8px 16px;
+}
+
+.author-header {
+    text-transform: capitalize;
+    text-align: left;
+    margin: 8px 16px;
+}
+
+.post-footer {
+    position: relative;
+    margin: 8px 16px;
+}
+
+ul.post-comment-list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.post-time {
+    position: absolute;
+    right: 0px;
+}

@@ -1,0 +1,8 @@
+.post-list {
+  width: 100%;
+}
+
+.post-list ul {
+  list-style-type: none;
+  padding-left: 10%
+}
