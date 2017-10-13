@@ -1,0 +1,25 @@
+.post-card {
+  width: 80%;
+  margin: 16px 0px;
+  padding: 8px 16px;
+  border: 1px solid rgba(51,51,51,1);
+  box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, .2);
+}
+
+.post-card-title {
+  font-size: 150%;
+  font-style: bold;
+}
+
+.post-card-body {
+  margin: 16px 0px;
+}
+
+.post-card-footer {
+  position: relative;
+}
+
+.post-card-time {
+  position: absolute;
+  right: 0px;
+}
