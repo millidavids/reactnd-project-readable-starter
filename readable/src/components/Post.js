@@ -36,19 +36,15 @@ class Post extends Component {
 
   render = () => {
     const commentItems = this.props.commentList.map((comment, index) => {
-      if (comment.id === this.state.editingComment) {
-        return (
+      const listItem = (comment.id === this.state.editingComment) ?
           <li key={'comment-item-' + index} className='comment-item'>        
             <CommentEdit setEdit={this.setEditingComment} id={comment.id}/>
           </li>
-        )
-      } else {
-        return (
+        :
           <li key={'comment-item-' + index} className='comment-item'>
             <Comment setEdit={this.setEditingComment} castCommentVote={this.props.castCommentVote} data={comment}/>
           </li>
-        )
-      }
+      return listItem
     })
     return (
       <div className='post'>
