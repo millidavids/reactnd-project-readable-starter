@@ -6,10 +6,12 @@
 * @return {promise} - promise of the fetch api response
 */
 const apiFetchSkel = (endpoint, method = 'GET', body = {}) => {
+  const apiUri = 'http://localhost:5001' || `${process.env.REACT_APP_API_URI}`
+  const auth = 'auth' || `${process.env.REACT_APP_AUTHORIZATION}`
   const options = {
     method: method,
     headers: new Headers({
-      'Authorization': process.env.REACT_APP_AUTHORIZATION,
+      'Authorization': auth,
       'Content-Type': 'application/json',
     }),
     mode: 'cors',
@@ -17,7 +19,7 @@ const apiFetchSkel = (endpoint, method = 'GET', body = {}) => {
     body: (method === 'GET' || method === 'HEAD') ? null : JSON.stringify(body),
   }
 
-  return fetch(`${process.env.REACT_APP_API_URI}${endpoint}`, options)
+  return fetch(`${apiUri}${endpoint}`, options)
 }
 
 /**
