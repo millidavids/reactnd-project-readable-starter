@@ -54,6 +54,16 @@ export const posts = (state = defaultPostsState, action) => {
           return post
         })
       }
+    case PostActions.SET_COMMENT_COUNT:
+      return {
+        ...state,
+        postList: state.postList.map((post) => {
+          if (post.id === action.id) {
+            post.commentCount = action.count
+          }
+          return post
+        })
+      }
     default:
       return state
   }

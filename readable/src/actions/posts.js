@@ -8,6 +8,7 @@ export const ADD_POST = 'ADD_POST'
 export const CAST_POST_VOTE = 'CAST_POST_VOTE'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const SET_COMMENT_COUNT = 'SET_COMMENT_COUNT'
 
 /**
 * @description receive posts redux action creator
@@ -94,6 +95,44 @@ export const deletePost = (id) => {
 }
 
 /**
+* @description sets the comment count for a post
+* @param {string} id - a deleted post id
+* @param {string} count - a comment count for that post
+* @return {object} - redux action for setting the comment count for a post
+*/
+export const setCommentCount = (id, count) => {
+  return {
+    type: SET_COMMENT_COUNT,
+    id: id,
+    count: count
+  }
+}
+
+/**
+* @description sets the post list and all comment counts for the posts
+* @param {object} posts - all of the posts
+* @return {object} - dispatching thunk action for setting comment count and post list
+*/
+export const setCommentCountAndPostList = (posts) => dispatch => {
+  dispatch(receivePosts(posts))
+  posts.forEach((post) => {
+    dispatch(fetchCommentCount(post.id))
+  })
+}
+
+/**
+* @description fetches the comment count for the api
+* @param {string} id - id of the post
+* @param {function} dispatch - thunk for multi dispatching
+* @fires {function} - api get post comments then dispatch set comment count and post list comment action
+*/
+export const fetchCommentCount = (id) => dispatch => {
+  API.getPostComments(id)
+    .then(res => res.json())
+    .then(result => dispatch(setCommentCount(id, result.length)))
+}
+
+/**
 * @description api interface thunk delete post action dispatcher
 * @param {string} id - a post id
 * @param {function} dispatch - thunk for multi dispatching
@@ -162,6 +201,6 @@ export const fetchPosts = (category) => dispatch => {
   } else {
     API.getPosts()
       .then(res => res.json())
-      .then(result => dispatch(receivePosts(result)))
+      .then(result => dispatch(setCommentCountAndPostList(result)))
   }
 }

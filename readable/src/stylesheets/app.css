@@ -94,3 +94,8 @@ ul.sidenav li a:hover {
     cursor: pointer;
     color: black;
 }
+
+.push-right {
+    position: absolute;
+    right: 0px;
+}

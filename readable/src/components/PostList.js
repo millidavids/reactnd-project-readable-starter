@@ -17,7 +17,7 @@ class PostList extends Component {
         </h1>
         <ul>
           {this.props.postList.map((post, index) => {
-            return <li key={index}><PostCard data={post}/></li>
+            return <li key={index}><PostCard data={post} castPostVote={this.props.castPostVote}/></li>
           })}
         </ul>
       </div>
@@ -47,6 +47,7 @@ const matchStateToProps = (state) => {
 const matchDispatchToProps = (dispatch) => {
   return {
     getPosts: (category) => dispatch(PostActions.fetchPosts(category)),
+    castPostVote: (id, vote) => dispatch(PostActions.fetchCastPostVote(id, vote))
   }
 }
 
